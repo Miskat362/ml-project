@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Prediction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <style>
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            font-family: Arial, sans-serif; /* Fallback font */
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .hero {
+            background: #ffffff;
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: .5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .prediction-form-container {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: .5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .footer {
+            padding: 2rem 0;
+            margin-top: 3rem;
+            background-color: #e9ecef;
+        }
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: .5rem;
+            background-color: #eef3ff; /* Light blue background for emphasis */
+            border: 1px solid #d1e0ff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Student Exam Performance Prediction</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <!-- Hero Section -->
+        <div class="hero text-center">
+            <h1 class="display-4">Machine Learning Prediction Model</h1>
+            <p class="lead">Enter the required features to get a prediction from our trained model.</p>
+        </div>
+
+        <!-- Prediction Form and Result Section -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10 prediction-form-container">
+                
+                <h2 class="h3 mb-4 text-center border-bottom pb-3">Student Exam Performance Prediction</h2>
+                
+                <form action="{{ url_for('predict_datapoint')}}" method="post" class="needs-validation" novalidate>
+                    
+                    <!-- Gender -->
+                    <div class="mb-3">
+                        <label class="form-label">Gender</label>
+                        <select class="form-select" name="gender" required>
+                            <option value="" selected disabled>Select your Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
+                    <!-- Race or Ethnicity -->
+                    <div class="mb-3">
+                        <label class="form-label">Race or Ethnicity</label>
+                        <select class="form-select" name="ethnicity" required>
+                            <option value="" selected disabled>Select Ethnicity</option>
+                            <option value="group A">Group A</option>
+                            <option value="group B">Group B</option>
+                            <option value="group C">Group C</option>
+                            <option value="group D">Group D</option>
+                            <option value="group E">Group E</option>
+                        </select>
+                    </div>
+
+                    <!-- Parental Level of Education -->
+                    <div class="mb-3">
+                        <label class="form-label">Parental Level of Education</label>
+                        <select class="form-select" name="parental_level_of_education" required>
+                            <option value="" selected disabled>Select Parent Education</option>
+                            <option value="associate's degree">associate's degree</option>
+                            <option value="bachelor's degree">bachelor's degree</option>
+                            <option value="high school">high school</option>
+                            <option value="master's degree">master's degree</option>
+                            <option value="some college">some college</option>
+                            <option value="some high school">some high school</option>
+                        </select>
+                    </div>
+
+                    <!-- Lunch Type -->
+                    <div class="mb-3">
+                        <label class="form-label">Lunch Type</label>
+                        <select class="form-select" name="lunch" required>
+                            <option value="" selected disabled>Select Lunch Type</option>
+                            <option value="free/reduced">free/reduced</option>
+                            <option value="standard">standard</option>
+                        </select>
+                    </div>
+
+                    <!-- Test preparation Course -->
+                    <div class="mb-3">
+                        <label class="form-label">Test preparation Course</label>
+                        <select class="form-select" name="test_preparation_course" required>
+                            <option value="" selected disabled>Select Test Course</option>
+                            <option value="none">None</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <!-- Reading Score -->
+                    <div class="mb-3">
+                        <label class="form-label">Reading Score (out of 100)</label>
+                        <input class="form-control" type="number" name="reading_score" placeholder="Enter Reading score" min='0' max='100' required/>
+                    </div>
+
+                    <!-- Writing Score -->
+                    <div class="mb-3">
+                        <label class="form-label">Writing Score (out of 100)</label>
+                        <input class="form-control" type="number" name="writing_score" placeholder="Enter Writing Score" min='0' max='100' required/>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="mb-3 pt-4">
+                        <input class="btn btn-primary w-100 btn-lg" type="submit" value="Predict Math Score" />
+                    </div>
+                    
+                </form>
+
+                <!-- Prediction Result -->
+                <div class="result-box mt-4">
+                    <h3 class="text-center mb-1">The Predicted Math Score is:</h3>
+                    <p class="text-center mt-2">
+                        <!-- Using Bootstrap classes for large, prominent score display -->
+                        <span class="fs-1 fw-bold text-primary"> 
+                            {{results}}
+                        </span>
+                        <span class="fs-4 text-secondary"> 
+                            / 100
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer text-center text-muted">
+        <div class="container">
+            <small>&copy; Made with ❤️ by Miskat Ahmmed</small>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
